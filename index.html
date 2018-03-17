@@ -38,9 +38,7 @@
 			background-image: url("ninja.gif");
 			background-size: contain;
 			position: absolute;
-			left: 45px;
-			top: 45px;
-		}
+			
 	</style>
 </head>
 <body>
@@ -51,19 +49,16 @@
 
 <script type="text/javascript">
 	var world = [
-		[2,1,1,1,2],
-		[2,0,2,2,2],
-		[2,1,1,1,2],
-		[2,1,2,1,2],
-		[2,1,1,1,2],
-		[2,1,2,2,2],
-		[2,1,1,1,2],
-		[2,1,2,1,2],
-		[2,2,2,2,2],
-		[2,1,2,2,2],
-		[2,1,1,1,2],
-		[2,1,2,1,2],
-		[2,2,2,2,2],
+		[1,1,1,1,1,1,1,1],
+		[1,2,2,2,2,2,1,1],
+		[1,2,1,1,1,2,1,1],
+		[1,2,2,1,2,2,1,1],
+		[1,2,1,1,1,2,1,1],
+		[1,2,1,2,1,2,1,1],
+		[1,2,2,2,2,2,1,1],
+		[1,1,1,1,1,1,1,1],
+		
+		
 	];
 
 	var worldDict = {
@@ -87,7 +82,53 @@
 		document.getElementById("world").innerHTML = output;
 
 	}
-	drawWorld()
+	drawWorld();
+
+	var ninjaman = {
+		x: 1,
+		y: 1
+	}
+
+	function drawNinjaman(){
+		document.getElementById("ninjaman").style.top = ninjaman.y * 40 + 
+		"px"
+		document.getElementById("ninjaman").style.left = ninjaman.x * 40 + 
+		"px"
+	}
+	drawNinjaman()
+
+
+	document.onkeydown = function(e){
+		if(e.keyCode == 37){
+			if(world[ninjaman.y][ninjaman.x -1] != 1){
+				ninjaman.x--;
+			}
+		}
+		if(e.keyCode == 39){
+			if(world[ninjaman.y][ninjaman.x+1] != 1){
+				ninjaman.x++;
+			}
+		}
+		if(e.keyCode == 40){
+			if(world[ninjaman.y+1][ninjaman.x] != 1){
+				ninjaman.y++;
+			}
+		}
+		if(e.keyCode == 38){
+			if(world[ninjaman.y-1][ninjaman.x] != 1){
+				ninjaman.y--;
+			}
+		}
+		world[ninjaman.y][ninjaman.x] = 0
+		drawNinjaman()
+		drawWorld()
+	}
+
+	//find a way to keep score of how many sushi he eats.
+	//sushi = 10pts, onigir = 5pts
+
+	//hacker challenges: create random world
+	//hacker challenges: create ghost that chase ninjaman
 
 </script>
 
