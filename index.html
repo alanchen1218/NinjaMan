@@ -30,6 +30,14 @@
 			background-image: url("sushi.png");
 			background-size: contain;
 		}
+		.onigiri {
+			background-color: black; 
+			height: 40px; 
+			width: 40px;
+			display: inline-block;
+			background-image: url("onigiri.png");
+			background-size: contain;
+		}
 		#ninjaman {
 			background-color: black; 
 			height: 40px; 
@@ -38,34 +46,93 @@
 			background-image: url("ninja.gif");
 			background-size: contain;
 			position: absolute;
-			
+		}
+		.bluey {
+			background-color: black; 
+			height: 40px; 
+			width: 40px;
+			display: inline-block;
+			background-image: url("bluey.gif");
+			background-size: contain;
+		}
+		.pinky {
+			background-color: black; 
+			height: 40px; 
+			width: 40px;
+			display: inline-block;
+			background-image: url("pinky.gif");
+			background-size: contain;
+		}
+		.red {
+			background-color: black; 
+			height: 40px; 
+			width: 40px;
+			display: inline-block;
+			background-image: url("red.gif");
+			background-size: contain;
+		}
+		.pumpky {
+			background-color: black; 
+			height: 40px; 
+			width: 40px;
+			display: inline-block;
+			background-image: url("pumpky.gif");
+			background-size: contain;
+		}
+		#score {
+			color: white;
+			font-size: 18pt;
+			position: absolute;
+			left:10px;
+			top:10px;
+		}
+		
 	</style>
 </head>
 <body>
 	<div id = "world"></div>
 	<div id = "ninjaman"></div>
-	
+	<div id = "score"></div>
 </body>
 
 <script type="text/javascript">
 	var world = [
 		[1,1,1,1,1,1,1,1],
-		[1,2,2,2,2,2,1,1],
-		[1,2,1,1,1,2,1,1],
-		[1,2,2,1,2,2,1,1],
-		[1,2,1,1,1,2,1,1],
-		[1,2,1,2,1,2,1,1],
-		[1,2,2,2,2,2,1,1],
+		[1,2,2,2,2,2,2,1],
+		[1,7,1,1,1,2,2,1],
+		[1,2,2,1,2,2,2,1],
+		[1,2,1,1,1,2,2,1],
+		[1,2,1,2,1,2,2,1],
+		[1,2,4,5,6,2,2,1],
+		[1,3,2,3,2,3,2,1],
+		[1,3,1,1,1,1,2,1],
+		[1,3,2,1,2,3,2,1],
+		[1,3,2,1,2,3,2,1],
+		[1,3,2,1,2,3,2,1],
+		[1,3,2,1,1,1,2,1],
+		[1,3,2,3,2,3,2,1],
 		[1,1,1,1,1,1,1,1],
-		
-		
 	];
 
 	var worldDict = {
 		0: "blank",
 		1: "wall",
-		2: "sushi"
+		2: "sushi",
+		3: "onigiri",
+		4: "bluey",
+		5: "pinky",
+		6: "pumpky",
+		7: "red"
 	}
+
+	var ghost1;
+
+	var ninjaman = {
+		x: 1,
+		y: 1
+	}
+
+	var count = 0;
 
 	function drawWorld(){
 		output = "";
@@ -84,11 +151,6 @@
 	}
 	drawWorld();
 
-	var ninjaman = {
-		x: 1,
-		y: 1
-	}
-
 	function drawNinjaman(){
 		document.getElementById("ninjaman").style.top = ninjaman.y * 40 + 
 		"px"
@@ -97,6 +159,12 @@
 	}
 	drawNinjaman()
 
+
+	function printScore() {
+		var scoreElement = document.getElementById("score");
+		scoreElement.innerHTML = "Score: " + count;
+	}
+	printScore();
 
 	document.onkeydown = function(e){
 		if(e.keyCode == 37){
@@ -119,13 +187,22 @@
 				ninjaman.y--;
 			}
 		}
+		if(world[ninjaman.y][ninjaman.x] == 2){
+			count+=5;
+		}
+		if(world[ninjaman.y][ninjaman.x] == 3){
+			count+=10
+		}
+
 		world[ninjaman.y][ninjaman.x] = 0
-		drawNinjaman()
-		drawWorld()
+		drawNinjaman();
+		drawWorld();
+		printScore();
+		console.log(count);	
 	}
 
 	//find a way to keep score of how many sushi he eats.
-	//sushi = 10pts, onigir = 5pts
+	//sushi = 5pts, onigir = 10pts
 
 	//hacker challenges: create random world
 	//hacker challenges: create ghost that chase ninjaman
